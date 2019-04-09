@@ -1,7 +1,6 @@
 package edu.upc.dsa;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class MyBikeImplementation implements MyBike {
     //Singleton
@@ -59,7 +58,17 @@ public class MyBikeImplementation implements MyBike {
 
     @Override
     public List<Bike> bikesByStationOrderByKms(String idStation) throws StationNotFoundException {
-        return null;
+        int stationPos = this.getStationbyId(idStation);
+        log.info("Station encontrada");
+        LinkedList<Bike> bikes = this.stations[stationPos].getBikes();
+        log.info("Lista de bicis en orden:" + bikes);
+        Collection.sort(bikes, new Comparator<Bike>()){
+            public int compare(Bike o1, Bike o2){
+                return (int) (o1.getKm() - o2.getKm());
+            }
+        };
+        log.info("Lista de bicis en orden:" + bikes);
+        return bikes;
     }
 
     @Override
