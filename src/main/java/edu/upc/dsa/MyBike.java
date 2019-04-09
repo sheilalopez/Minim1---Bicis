@@ -7,10 +7,10 @@ public interface MyBike {
     /**
      * number of stations
      */
-    public static final int S = 10;
+    int S = 10;
 
     /**
-     * Add a new edu.upc.eetac.dsa.User
+     * Add a new edu.upc.dsa.User
      *
      * @param idUser identifier of the user
      * @param name name of the user
