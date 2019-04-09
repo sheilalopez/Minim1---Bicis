@@ -22,7 +22,7 @@ public class Station {
         this.lon = lon;
         this.bikes = new LinkedList<>();
     }
-
+    //metodos
     public void addBike (Bike bike){
         this.bikes.add(bike);
     }
@@ -65,5 +65,11 @@ public class Station {
 
     public void setLon(double lon) {
         this.lon = lon;
+    }
+    public LinkedList<Bike> getBikes() {
+        return bikes;
+    }
+    public void setBikes(LinkedList<Bike> bikes) {
+        this.bikes = bikes;
     }
 }

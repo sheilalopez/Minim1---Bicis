@@ -1,8 +1,13 @@
 package edu.upc.dsa;
 
+import org.apache.log4j.Logger;
+
 import java.util.*;
 
 public class MyBikeImplementation implements MyBike {
+
+
+    private final static Logger log = Logger.getLogger(MyBikeImplementation.class.getName());
     //Singleton
     private static MyBikeImplementation instance;
     private int numStations;
@@ -67,37 +72,72 @@ public class MyBikeImplementation implements MyBike {
                 return (int) (o1.getKm() - o2.getKm());
             }
         };
+
         log.info("Lista de bicis en orden:" + bikes);
         return bikes;
     }
 
     @Override
     public Bike getBike(String stationId, String userId) throws UserNotFoundException, StationNotFoundException {
-        return null;
+        int stationPos = this.getStationById(stationId);
+        log.info("station encontrada");
+        Bike bike = this.stations[stationPos].getBikes().removeFirst();
+        User user = this.users.get(userId);
+        if (user != null){
+            log.info("Primera bici:" + bike);
+            user.addBike(bike);
+            return bike;
+        }else {
+            log.info("bici no encontrada");
+
+            throw new UserNotFoundException;
+        }
+
     }
 
     @Override
     public List<Bike> bikesByUser(String userId) throws UserNotFoundException {
-        return null;
+        User user = this.users.get(userId);
+        if(user != null){
+            LinkedList<Bike> bikes = user.getBikes();
+            log.info("Lista de bicis:" + userId + ":" + bikes);
+            return bikes;
+        }else {
+            log.info("Bici no encontrada");
+            throw new UserNotFoundException;
+
+        }
+
     }
 
     @Override
     public int numUsers() {
-        return 0;
+        log.info("Numero de usuarios: " +this.users.size());
+        return this.users.size();
+
     }
 
     @Override
     public int numStations() {
-        return 0;
+        log.info("Numero de estaciones:" + this.numStations);
+        return this.numStations;
+
     }
 
     @Override
     public int numBikes(String idStation) throws StationNotFoundException {
-        return 0;
+        int stationPos = this.getStationById(idStation);
+        log.info("Station found");
+        log.info("Number of bikes: " + this.stations[stationPos].getBikes().size());
+        return this.stations[stationPos].getBikes().size();
+
     }
 
     @Override
     public void clear() {
-
+        this.numStations = 0;
+        this.stations = new Station[S];
+        this.users = new HashMap<>();
+        log.info("Data cleared");
     }
 }
