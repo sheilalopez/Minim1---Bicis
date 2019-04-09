@@ -24,17 +24,37 @@ public class MyBikeImplementation implements MyBike {
     //acaba Singleton
     @Override
     public void addUser(String idUser, String name, String surname) {
+        this.users.put(idUser, new User(idUser,name,surname));
+        log.info(users.size());
+        log.info("User added:" + this.users.get(idUser));
+
 
     }
 
     @Override
     public void addStation(String idStation, String description, int max, double lat, double lon) {
+        if (numStations!= S){
+            this.stations[this.numStations++] = new Station(idStation,description,max,lat,lon);
+            log.info("Station added: " + this.stations[numStations - 1]);
+        }else {
+            log.info("Lleno");
+        }
 
     }
 
     @Override
     public void addBike(String idBike, String description, double kms, String idStation) throws StationFullException, StationNotFoundException {
+    Bike bike = new Bike(idBike, description, kms, idStation);
+    int Stationpos = this.getStationbyId(idStation);
+    log.info("Station found");
+    if (this.stations[Stationpos].getBikes().size() < this.stations[Stationpos].getMax()){
+        this.stations[Stationpos].addBike(bike);
+        log.info("bici añadida");
 
+    }else {
+        log.info("estación llena");
+        throw new StationFullException();
+    }
     }
 
     @Override
