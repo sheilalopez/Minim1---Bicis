@@ -41,6 +41,7 @@ public interface MyBike {
      * @throws StationFullException  if the station is full
      * @throws StationNotFoundException if the station doesn't exist
      */
+
     public void addBike(String idBike, String description, double kms, String idStation) throws StationFullException, StationNotFoundException;
 
 
