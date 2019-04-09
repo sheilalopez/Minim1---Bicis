@@ -23,6 +23,10 @@ public class Station {
         this.bikes = new LinkedList<>();
     }
 
+    public void addBike (Bike bike){
+        this.bikes.add(bike);
+    }
+
     public String getIdStation() {
         return idStation;
     }
