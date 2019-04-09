@@ -1,13 +1,20 @@
 package edu.upc.dsa;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class MyBikeImplementation implements MyBike {
     //Singleton
     private static MyBikeImplementation instance;
+    private int numStations;
+    private Station[] stations;
+    private HashMap<String,User> users;
+
     //contstructor privado
     private MyBikeImplementation () {
-
+        this.numStations = 0;
+        this.stations = new Station[S];
+        this.users = new HashMap<>();
     }
     //metodo getInstance
     public static MyBike getInstance(){
