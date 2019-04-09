@@ -11,7 +11,7 @@ public class MyBikeTest {
 
     @Before
     public void setUp() throws StationNotFoundException, StationFullException {
-        this.mb = MyBikeImpl.getInstance();
+        this.mb = MyBikeImplementation.getInstance();
         this.mb.addUser("user1", "Juan", "Lopex");
 
 

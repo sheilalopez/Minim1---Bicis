@@ -22,7 +22,7 @@ public class MyBikeServices {
     private MyBike myBike;
 
     public MyBikeServices() throws StationFullException, StationNotFoundException {
-        this.myBike = MyBikeImpl.getInstance();
+        this.myBike = MyBikeImplementation.getInstance();
         this.myBike.addUser("user1", "Juan", "Lopex");
 
 

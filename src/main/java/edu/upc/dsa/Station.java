@@ -72,4 +72,8 @@ public class Station {
     public void setBikes(LinkedList<Bike> bikes) {
         this.bikes = bikes;
     }
+
+    public String getidStation() {
+        return idStation;
+    }
 }
