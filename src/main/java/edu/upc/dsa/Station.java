@@ -1,14 +1,17 @@
 package edu.upc.dsa;
 
+import java.util.LinkedList;
+
 public class Station {
     private String idStation;
     private String description;
     private int max;
     private double lat;
     private double lon;
+    private LinkedList<Bike> bikes;
 
     public Station (){
-
+        this.bikes = new LinkedList<>();
     }
 
     public Station(String idStation, String description, int max, double lat, double lon) {
@@ -17,6 +20,7 @@ public class Station {
         this.max = max;
         this.lat = lat;
         this.lon = lon;
+        this.bikes = new LinkedList<>();
     }
 
     public String getIdStation() {
