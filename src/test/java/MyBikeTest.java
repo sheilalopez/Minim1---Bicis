@@ -3,7 +3,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import sun.awt.image.ImageWatched;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class MyBikeTest {
@@ -51,16 +53,7 @@ public class MyBikeTest {
         Assert.assertEquals(3, this.mb.numStations());
     }
 
-    @Test
-    public void testAddBike() throws StationNotFoundException, StationFullException {
 
-        this.mb.addBike("bike500", "descripton", 43.3, "Station1");
-        this.mb.addBike("bike600", "descripton", 45.3, "Station1");
-
-        Assert.assertEquals(5, this.mb.numBikes("Station1"));
-
-
-    }
 
     @Test(expected = StationFullException.class)
     public void testAddBikesAndStationFull() throws StationNotFoundException, StationFullException {
@@ -114,6 +107,26 @@ public class MyBikeTest {
         Assert.assertEquals("bike201", bikes.get(1).getId());
 
     }
+    @Test
+    public void testbikesByStationOrderByKms () throws StationNotFoundException {
+        List<Bike> bikes = this.mb.bikesByStationOrderByKms("Station1");
+
+        Assert.assertEquals(10.2,bikes.get(0).getKms(), 1);
+        Assert.assertEquals(25.45,bikes.get(1).getKms(), 1);
+        Assert.assertEquals(70.3,bikes.get(2).getKms(), 1);
+
+
+    }
+  @Test
+  public void testAddBike() throws StationNotFoundException, StationFullException {
+
+      this.mb.addBike("bike400", "description", 10.2, "Station1");
+      this.mb.addBike("bike500", "descripton", 43.3, "Station1");
+      this.mb.addBike("bike600", "descripton", 45.3, "Station1");
+
+
+      Assert.assertEquals(6, this.mb.numBikes("Station1"));
+  }
 
 
 }

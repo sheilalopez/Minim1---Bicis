@@ -37,37 +37,48 @@ public class MyBikeImplementation implements MyBike {
 
     @Override
     public void addStation(String idStation, String description, int max, double lat, double lon) {
-        if (numStations!= S){
-            this.stations[this.numStations++] = new Station(idStation,description,max,lat,lon);
-            log.info("Station added: " + this.stations[numStations - 1]);
-        }else {
-            log.info("Lleno");
-        }
-
+            this.stations[this.numStations] = new Station(idStation,description,max,lat,lon);
+            this.numStations++;
+            log.info("Station added: " + Arrays.toString(this.stations));
     }
 
     @Override
     public void addBike(String idBike, String description, double kms, String idStation) throws StationFullException, StationNotFoundException {
     Bike bike = new Bike(idBike, description, kms, idStation);
-    int Stationpos = this.getStationbyId(idStation);
-    log.info("Station found");
-    if (this.stations[Stationpos].getBikes().size() < this.stations[Stationpos].getMax()){
-        this.stations[Stationpos].addBike(bike);
-        log.info("bici añadida");
-
-    }else {
-        log.info("estación llena");
-        throw new StationFullException();
+    Station station = null;
+    for (int i =0; i<numStations; i++){
+        if (idStation.equals(this.stations[i].getIdStation())){
+            log.info("Station inside if: " + this.stations[i]);
+            log.info("Current bikes: " +  this.stations[i].getBikes());
+            station = this.stations[i];
+            log.info(station);
+        }
     }
+
+    log.info("Station: " + station);
+
+    if (station != null) {
+        station.addBike(bike);
+    }
+
     }
 
     @Override
     public List<Bike> bikesByStationOrderByKms(String idStation) throws StationNotFoundException {
-        int stationPos = this.getStationbyId(idStation);
+        Station station = new Station();
+        for (int i= 0; i<numStations; i++ ){
+            if (idStation.equals(this.stations[i].getIdStation())){
+                station = this.stations[i];
+
+            }else {
+                log.info("Station not found");
+            }
+        }
         log.info("Station encontrada");
-        LinkedList<Bike> bikes = this.stations[stationPos].getBikes();
-        log.info("Lista de bicis en orden:" + bikes);
-        Collection.sort(bikes, new Comparator<Bike>(){
+        List<Bike> bikes = station.getBikes();
+        log.info("Lista de bicis desordenadas:" + bikes);
+        Collections.sort(bikes, new Comparator<Bike>(){
+            @Override
             public int compare(Bike o1, Bike o2){
                 return (int) (o1.getKm() - o2.getKm());
             }
@@ -90,7 +101,7 @@ public class MyBikeImplementation implements MyBike {
         }else {
             log.info("bici no encontrada");
 
-            throw new UserNotFoundException;
+            throw new UserNotFoundException();
         }
 
     }
@@ -104,7 +115,7 @@ public class MyBikeImplementation implements MyBike {
             return bikes;
         }else {
             log.info("Bici no encontrada");
-            throw new UserNotFoundException;
+            throw new UserNotFoundException ();
 
         }
 
@@ -133,11 +144,15 @@ public class MyBikeImplementation implements MyBike {
 
     }
 
+    private int getStationById(String idStation) {
+        return 0;
+    }
+
     @Override
     public void clear() {
-        this.numStations = 0;
-        this.stations = new Station[S];
-        this.users = new HashMap<>();
+        instance = null;
+        this.stations = null;
+        this.users = null;
         log.info("Data cleared");
     }
 }
